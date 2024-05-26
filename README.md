@@ -12,7 +12,8 @@ you can download this app from cafe bazar
 http://cafebazaar.ir/app/?id=com.farzin.checklisttodo&ref=share
 
 
-![photo_2024-01-30_10-51-40](https://github.com/farzinAndroid/CheckList/assets/124037241/26c3cbbd-82ba-492c-9674-910b5eb5104c)
+![photo_2024-05-26_16-12-47](https://github.com/farzinAndroid/CheckList/assets/124037241/809ba3b0-0b84-4cdf-9604-385d0a57825a)
 
 
-![photo_2024-01-30_10-51-43](https://github.com/farzinAndroid/CheckList/assets/124037241/64dad773-a401-4ae7-b40f-a69515201d8a)
+
+![photo_2024-05-26_16-12-44](https://github.com/farzinAndroid/CheckList/assets/124037241/db078cbb-2b1b-45d3-acd1-234b87e8f921)

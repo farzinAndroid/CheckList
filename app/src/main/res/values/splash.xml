@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.CheckList.MySplash" parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenBackground">#F8FDFF</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.CheckList</item>
+
+    </style>
+
+
+</resources>

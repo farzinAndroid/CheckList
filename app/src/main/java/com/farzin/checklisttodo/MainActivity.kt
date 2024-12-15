@@ -64,22 +64,17 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun checkPermissions() {
-        // Check for both notifications and alarms on Android 13+
+        // Check for both notifications on Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.SCHEDULE_EXACT_ALARM
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(
-                        Manifest.permission.POST_NOTIFICATIONS,
-                        Manifest.permission.SCHEDULE_EXACT_ALARM
+                        Manifest.permission.POST_NOTIFICATIONS
                     ),
                     1
                 )

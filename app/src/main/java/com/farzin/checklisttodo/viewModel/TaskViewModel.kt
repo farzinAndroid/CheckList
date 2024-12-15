@@ -13,7 +13,6 @@ import androidx.lifecycle.viewModelScope
 import com.farzin.checklisttodo.model.home.Task
 import com.farzin.checklisttodo.repo.TaskDBRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,6 +21,7 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
 
+@SuppressLint("NewApi")
 @HiltViewModel
 class TaskViewModel
 @Inject constructor(
@@ -96,7 +96,7 @@ class TaskViewModel
 
 
 
-    @SuppressLint("ScheduleExactAlarm")
+
     fun scheduleNotification(context: Context, triggerTime: Calendar, taskId: Int,task:Task) {
 
 
@@ -107,7 +107,7 @@ class TaskViewModel
             context,
             taskId, // Unique request code, use task ID for simplicity
             alarmIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         alarmManager.setExactAndAllowWhileIdle(
@@ -124,7 +124,7 @@ class TaskViewModel
             context,
             taskId, // Unique request code, use task ID for simplicity
             alarmIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         alarmManager.cancel(pendingIntent)

@@ -214,73 +214,73 @@ fun AddUpdateScreen(
             item {
                 AddTaskButtonSection(
                     onAddClicked = {
-                        if (taskTitleText.isEmpty() || taskDueTimeText.isEmpty() ||
-                            priorityNumber == -1 || subTasks.isEmpty()
-                        ) {
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.please_fill_out_everything),
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        } else {
-
-                            val newTask = Task(
-                                title = taskTitleText,
-                                description = taskDescriptionText,
-                                dueTime = taskDueTimeText,
-                                subTask = subTasks,
-                                priority = priorityNumber,
-                                dueYear = taskDueYearText,
-                                dueMonth = taskDueMonthText,
-                                dueDay = taskDueDayText
-                            )
-
-                            scope.launch {
-                                taskViewModel.insertTask(newTask)
-                            }
-
-
-                            val currentTimeForNotif = DateHelper.createCalendarWithDateTime(
-                                year = taskDueYearText,
-                                month = taskDueMonthText,
-                                day = taskDueDayText,
-                                timeString = taskDueTimeText
-                            ).timeInMillis
-
-                            val currentTime = Calendar.getInstance().timeInMillis
-
-                            val isTaskComplete = !subTasks.any { !it.subtaskCompleted }
-
-
-                            if (currentTimeForNotif > currentTime && !isTaskComplete) {
-                                // Schedule the notification for the task
-                                scope.launch {
-                                    val calendarTime = DateHelper.createCalendarWithDateTime(
-                                        year = newTask.dueYear,
-                                        month = newTask.dueMonth,
-                                        day = newTask.dueDay,
-                                        timeString = newTask.dueTime
-                                    )
-
-                                    taskViewModel.scheduleNotification(
-                                        context = context,
-                                        triggerTime = calendarTime,
-                                        taskId = lastTaskId + 1,
-                                        task = newTask
-                                    )
-                                }
+                        scope.launch {
+                            if (taskTitleText.isEmpty() || taskDueTimeText.isEmpty() ||
+                                priorityNumber == -1 || subTasks.isEmpty()
+                            ) {
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.please_fill_out_everything),
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
                             } else {
-                                scope.launch {
-                                    taskViewModel.cancelNotification(context, lastTaskId + 1)
-                                }
-                            }
 
-                            scope.launch {
+                                val newTask = Task(
+                                    title = taskTitleText,
+                                    description = taskDescriptionText,
+                                    dueTime = taskDueTimeText,
+                                    subTask = subTasks,
+                                    priority = priorityNumber,
+                                    dueYear = taskDueYearText,
+                                    dueMonth = taskDueMonthText,
+                                    dueDay = taskDueDayText
+                                )
+
+
+                                taskViewModel.insertTask(newTask)
+
+
+                                val currentTimeForNotif = DateHelper.createCalendarWithDateTime(
+                                    year = taskDueYearText,
+                                    month = taskDueMonthText,
+                                    day = taskDueDayText,
+                                    timeString = taskDueTimeText
+                                ).timeInMillis
+
+                                val currentTime = Calendar.getInstance().timeInMillis
+
+                                val isTaskComplete = !subTasks.any { !it.subtaskCompleted }
+
+
+                                if (currentTimeForNotif > currentTime && !isTaskComplete) {
+                                    // Schedule the notification for the task
+                                    scope.launch {
+                                        val calendarTime = DateHelper.createCalendarWithDateTime(
+                                            year = newTask.dueYear,
+                                            month = newTask.dueMonth,
+                                            day = newTask.dueDay,
+                                            timeString = newTask.dueTime
+                                        )
+
+                                        taskViewModel.scheduleNotification(
+                                            context = context,
+                                            triggerTime = calendarTime,
+                                            taskId = lastTaskId + 1,
+                                            task = newTask
+                                        )
+                                    }
+                                } else {
+                                    scope.launch {
+                                        taskViewModel.cancelNotification(context, lastTaskId + 1)
+                                    }
+                                }
+
+
                                 delay(300)
                                 navController.popBackStack()
-                            }
 
+                            }
 
                         }
 
@@ -291,78 +291,81 @@ fun AddUpdateScreen(
             item {
                 UpdateTaskButtonSection(
                     onEditClicked = {
-
-                        if (taskTitleText.isEmpty() || taskDueTimeText.isEmpty() ||
-                            priorityNumber == -1 || subTasks.isEmpty()
-                        ) {
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.please_fill_out_everything),
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        } else {
-
-                            val updatedTask = Task(
-                                title = taskTitleText,
-                                description = taskDescriptionText,
-                                dueTime = taskDueTimeText,
-                                subTask = subTasks,
-                                priority = priorityNumber,
-                                taskId = singleTask.taskId,
-                                dueYear = taskDueYearText,
-                                dueMonth = taskDueMonthText,
-                                dueDay = taskDueDayText
-                            )
-
-
-                            scope.launch {
-                                taskViewModel.updateTask(updatedTask)
-                            }
-
-
-                            val currentTimeForNotif = DateHelper.createCalendarWithDateTime(
-                                year = taskDueYearText,
-                                month = taskDueMonthText,
-                                day = taskDueDayText,
-                                timeString = taskDueTimeText
-                            ).timeInMillis
-
-
-                            val currentTime = Calendar.getInstance().timeInMillis
-
-                            val isTaskComplete = !subTasks.any { !it.subtaskCompleted }
-
-                            if (currentTimeForNotif > currentTime && !isTaskComplete) {
-                                // Schedule the notification for the task
-                                scope.launch {
-                                    val calendarTime = DateHelper.createCalendarWithDateTime(
-                                        year = updatedTask.dueYear,
-                                        month = updatedTask.dueMonth,
-                                        day = updatedTask.dueDay,
-                                        timeString = updatedTask.dueTime
-                                    )
-
-                                    taskViewModel.scheduleNotification(
-                                        context = context,
-                                        triggerTime = calendarTime,
-                                        taskId = updatedTask.taskId,
-                                        task = updatedTask
-                                    )
-                                }
+                        scope.launch {
+                            if (taskTitleText.isEmpty() || taskDueTimeText.isEmpty() ||
+                                priorityNumber == -1 || subTasks.isEmpty()
+                            ) {
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.please_fill_out_everything),
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
                             } else {
-                                scope.launch {
-                                    taskViewModel.cancelNotification(context, updatedTask.taskId)
+
+                                val updatedTask = Task(
+                                    title = taskTitleText,
+                                    description = taskDescriptionText,
+                                    dueTime = taskDueTimeText,
+                                    subTask = subTasks,
+                                    priority = priorityNumber,
+                                    taskId = singleTask.taskId,
+                                    dueYear = taskDueYearText,
+                                    dueMonth = taskDueMonthText,
+                                    dueDay = taskDueDayText
+                                )
+
+
+
+                                taskViewModel.updateTask(updatedTask)
+
+
+                                val currentTimeForNotif = DateHelper.createCalendarWithDateTime(
+                                    year = taskDueYearText,
+                                    month = taskDueMonthText,
+                                    day = taskDueDayText,
+                                    timeString = taskDueTimeText
+                                ).timeInMillis
+
+
+                                val currentTime = Calendar.getInstance().timeInMillis
+
+                                val isTaskComplete = !subTasks.any { !it.subtaskCompleted }
+
+                                if (currentTimeForNotif > currentTime && !isTaskComplete) {
+                                    // Schedule the notification for the task
+                                    scope.launch {
+                                        val calendarTime = DateHelper.createCalendarWithDateTime(
+                                            year = updatedTask.dueYear,
+                                            month = updatedTask.dueMonth,
+                                            day = updatedTask.dueDay,
+                                            timeString = updatedTask.dueTime
+                                        )
+
+                                        taskViewModel.scheduleNotification(
+                                            context = context,
+                                            triggerTime = calendarTime,
+                                            taskId = updatedTask.taskId,
+                                            task = updatedTask
+                                        )
+                                    }
+                                } else {
+                                    scope.launch {
+                                        taskViewModel.cancelNotification(
+                                            context,
+                                            updatedTask.taskId
+                                        )
+                                    }
                                 }
-                            }
 
 
 
-                            scope.launch {
+
                                 delay(300)
                                 navController.popBackStack()
-                            }
 
+
+                            }
 
                         }
 

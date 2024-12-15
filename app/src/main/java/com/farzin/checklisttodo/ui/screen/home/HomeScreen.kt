@@ -119,8 +119,8 @@ fun Home(
                     ProfileDialogContent(
                         profileList = profileList,
                         onProfileClicked = { profile ->
-                            dataStoreViewModel.saveProfile(profile)
                             scope.launch {
+                                dataStoreViewModel.saveProfile(profile)
                                 delay(50)
                                 showProfileDialog = false
                             }
